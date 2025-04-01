@@ -41,7 +41,7 @@ class _NewExpenseState extends State<NewExpense> {
         builder: (cxt) => AlertDialog(
           title: const Text('Invalid Input'),
           content:
-              const Text('Make sure to enter a valid title,amount and date'),
+              const Text('Make sure to enter a valid title, amount and date'),
           actions: [
             TextButton(
               onPressed: () {
@@ -80,6 +80,7 @@ class _NewExpenseState extends State<NewExpense> {
           TextField(
             controller: _titleController,
             maxLength: 50,
+            style: TextStyle(color: Theme.of(context).colorScheme.onSurface),
             decoration: const InputDecoration(
               label: Text('Title'),
             ),
@@ -90,6 +91,8 @@ class _NewExpenseState extends State<NewExpense> {
                 child: TextField(
                   controller: _amountController,
                   keyboardType: TextInputType.number,
+                  style:
+                      TextStyle(color: Theme.of(context).colorScheme.onSurface),
                   decoration: const InputDecoration(
                     prefixText: '₹ ',
                     label: Text('Amount'),
@@ -115,29 +118,34 @@ class _NewExpenseState extends State<NewExpense> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 16,
-          ),
+          const SizedBox(height: 16),
           Row(
             children: [
               DropdownButton(
-                  value: _selectedCategory,
-                  items: Category.values
-                      .map(
-                        (category) => DropdownMenuItem(
-                          value: category,
-                          child: Text(
-                            category.name.toUpperCase(),
+                value: _selectedCategory,
+                items: Category.values
+                    .map(
+                      (category) => DropdownMenuItem(
+                        value: category,
+                        child: Text(
+                          category.name.toUpperCase(),
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.onSurface,
                           ),
                         ),
-                      )
-                      .toList(),
-                  onChanged: (value) {
-                    if (value == null) return;
-                    setState(() {
-                      _selectedCategory = value;
-                    });
-                  }),
+                      ),
+                    )
+                    .toList(),
+                onChanged: (value) {
+                  if (value == null) return;
+                  setState(() {
+                    _selectedCategory = value;
+                  });
+                },
+                dropdownColor: Theme.of(context)
+                    .colorScheme
+                    .surfaceContainer, // Matches dark theme
+              ),
               const Spacer(),
               TextButton(
                 onPressed: () {
@@ -147,6 +155,12 @@ class _NewExpenseState extends State<NewExpense> {
               ),
               ElevatedButton(
                 onPressed: _submitExpenseData,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primaryContainer,
+                  foregroundColor:
+                      Theme.of(context).colorScheme.onPrimaryContainer,
+                ),
                 child: const Text('Save Expense'),
               ),
             ],
